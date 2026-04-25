@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIGBANG 20주년 기념 | THE ETERNAL CROWN</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 고급스러운 서체 조합: 
+         - Cinzel: 시그니처 영문
+         - Black Han Sans: 포스터 스타일 한글 제목
+         - Noto Serif KR: 우아한 한글 명조
+         - Noto Sans KR: 세련된 한글 고딕
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Black+Han+Sans&family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --bg-lighter: rgba(20, 20, 25, 0.7);
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa8c2c;
+            --text-white: #f5f5f5;
+            --text-gray: #b0b0b0;
+            --gold-gradient: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(212, 175, 55, 0.2);
+            --gold-glow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* 고급 타이포그래피 */
+        h1, .hero-title { font-family: 'Cinzel', 'Black Han Sans', serif; }
+        h2, .section-title { font-family: 'Black Han Sans', sans-serif; letter-spacing: 2px; }
+        h3, .card-title { font-family: 'Noto Serif KR', serif; font-weight: 700; }
+        .brand-font { font-family: 'Cinzel', serif; }
+
+        /* 배경 효과: 골드 블러 & 파티클 */
+        .bg-glow {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+            pointer-events: none;
+        }
+
+        /* 애니메이션 효과 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gold-text {
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Glassmorphism 공통 스타일 */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--gold-primary);
+            text-decoration: none;
+            text-shadow: var(--gold-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gold-primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Solo Chapters Section Style */
+        .solo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .solo-card {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .solo-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold-primary);
+        }
+
+        .solo-name {
+            font-size: 1.8rem;
+            color: var(--gold-primary);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+        }
+
+        .solo-desc {
+            font-size: 0.95rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+            word-break: keep-all;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .tag {
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--gold-dark);
+            color: var(--gold-light);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .solo-quote {
+            font-family: 'Noto Serif KR', serif;
+            font-style: italic;
+            font-size: 0.9rem;
+            color: var(--gold-light);
+            opacity: 0.8;
+            border-left: 2px solid var(--gold-primary);
+            padding-left: 15px;
+            margin-top: 10px;
+        }
+
+        /* Hero Section - 스테이지 조명 효과 */
+        #hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(to bottom, rgba(5, 5, 5, 0.5), var(--bg-dark)), url('https://upload.wikimedia.org/wikipedia/commons/c/ce/BIGBANG_2011_%28current_members_since_2023%29.jpg') center/cover no-repeat;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        /* Spotlight 효과 */
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
+            pointer-events: none;
+            animation: lightPulse 5s infinite alternate;
+        }
+
+        @keyframes lightPulse {
+            0% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+            100% { opacity: 0.8; transform: translateX(-50%) scale(1.1); }
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            letter-spacing: 8px;
+            color: var(--gold-light);
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+        .hero-title {
+            font-size: 7rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 35px;
+            letter-spacing: 5px;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .hero-desc {
+            font-size: 1.3rem;
+            color: var(--text-white);
+            max-width: 700px;
+            margin-bottom: 50px;
+            word-break: keep-all;
+            font-family: 'Noto Serif KR', serif;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .coachella-hint {
+            font-size: 0.9rem;
+            color: var(--gold-primary);
+            letter-spacing: 3px;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--gold-primary);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-15px) translateX(-50%); }
+            60% { transform: translateY(-7px) translateX(-50%); }
+        }
+
+        /* Section Settings */
+        section {
+            padding: 120px 8vw;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+            text-transform: uppercase;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--gold-gradient);
+            box-shadow: var(--gold-glow);
+        }
+
+        /* Timeline Section - Glassmorphism */
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, var(--gold-dark), transparent);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .timeline-item {
+            padding: 20px 50px;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            right: -8px;
+            background-color: var(--bg-dark);
+            border: 3px solid var(--gold-primary);
+            top: 30px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 15px var(--gold-primary);
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+        .right::after { left: -8px; }
+
+        .timeline-content {
+            padding: 40px;
+            transition: all 0.5s ease;
+        }
+
+        .timeline-content:hover {
+            transform: scale(1.03);
+            border-color: var(--gold-primary);
+            box-shadow: var(--gold-glow);
+        }
+
+        .timeline-year {
+            font-size: 2.2rem;
+            color: var(--gold-primary);
+            font-family: 'Cinzel', serif;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+        
+        .timeline-content h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: var(--gold-light);
+        }
+        
+        .timeline-content p {
+            font-size: 0.95rem;
+            word-break: keep-all;
+            color: var(--text-gray);
+        }
+
+        /* 2026 Coachella Special Style */
+        .coachella-event {
+            border: 2px solid var(--gold-primary);
+            background: rgba(212, 175, 55, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .coachella-event::before {
+            content: 'SPECIAL';
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            background: var(--gold-primary);
+            color: black;
+            font-size: 0.7rem;
+            font-weight: 900;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+        }
+
+        /* Albums Section - Grid & Glass */
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .album-card {
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--gold-primary);
+        }
+
+        .album-art {
+            width: 100%;
+            height: 320px;
+            position: relative;
+            transition: transform 0.6s ease;
+        }
+
+        .album-card:hover .album-art {
+            transform: scale(1.1);
+        }
+
+        .album-1 .album-art { background: url('https://upload.wikimedia.org/wikipedia/commons/4/44/Always_%28EP%29.jpeg') center/cover; }
+        .album-2 .album-art { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/BigBang_-_Alive_%28Korean_Cover%29.jpg/500px-BigBang_-_Alive_%28Korean_Cover%29.jpg') center/cover; }
+        .album-3 .album-art { background: url('https://upload.wikimedia.org/wikipedia/en/b/b2/BIGBANG_-_MADE.jpg') center/cover; }
+        
+        .album-info {
+            padding: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .album-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--gold-primary);
+        }
+
+        .album-year {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+        }
+
+        /* Members Section */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .member-card {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--gold-glow);
+        }
+
+        .member-avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            border: 4px solid var(--gold-primary);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        
+        .member-card:hover .member-avatar {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .member-gd .member-avatar { background: url('https://upload.wikimedia.org/wikipedia/commons/2/21/G-Dragon_in_October_2025.jpg') center 20%/cover; }
+        .member-taeyang .member-avatar { background: url('https://upload.wikimedia.org/wikipedia/commons/5/50/Taeyang_-_MADE_THE_MOVIE_Premiere_%28cropped%29.jpg') center/cover; }
+        .member-daesung .member-avatar { background: url('https://upload.wikimedia.org/wikipedia/commons/4/4d/Daesung_-_MADE_THE_MOVIE_Premiere.jpg') center/cover; }
+
+        .member-name {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            color: var(--gold-primary);
+        }
+
+        .member-role {
+            font-size: 0.9rem;
+            color: var(--gold-light);
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        /* Legacy Section */
+        #legacy {
+            background: linear-gradient(to top, #000, var(--bg-dark));
+            text-align: center;
+            position: relative;
+        }
+
+        .legacy-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px;
+        }
+
+        .legacy-quote {
+            font-size: 2.4rem;
+            font-family: 'Noto Serif KR', serif;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin: 50px 0;
+            line-height: 1.4;
+            word-break: keep-all;
+        }
+
+        .coachella-legacy {
+            margin-top: 30px;
+            font-size: 1.1rem;
+            color: var(--gold-primary);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-logo {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            letter-spacing: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .social-links span {
+            color: var(--gold-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: color 0.3s;
+        }
+
+        .social-links span:hover {
+            color: var(--gold-light);
+        }
+
+        .footer-text {
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            letter-spacing: 1px;
+        }
+
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.3;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 992px) {
+            .hero-title { font-size: 5rem; }
+            .section-title { font-size: 2.8rem; }
+        }
+
+        @media screen and (max-width: 768px) {
+            nav { padding: 15px 25px; }
+            .hero-title { font-size: 3.5rem; }
+            .nav-links { display: none; }
+            
+            .timeline-container::after { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 50px; padding-right: 20px; }
+            .timeline-item::after { left: 12px; }
+            .left::after, .right::after { left: 12px; }
+            .right { left: 0%; }
+            
+            .legacy-quote { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow" id="particles-container"></div>
+
+    <nav>
+        <a href="#" class="logo brand-font">BIGBANG 20</a>
+        <div class="nav-links">
+            <a href="#hero">HOME</a>
+            <a href="#timeline">JOURNEY</a>
+            <a href="#albums">ALBUMS</a>
+            <a href="#members">MEMBERS</a>
+            <a href="#legacy">LEGACY</a>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="hero-subtitle reveal">SINCE 2006 — TO ETERNITY</div>
+        <h1 class="hero-title reveal" style="transition-delay: 0.2s;">
+            <span class="gold-text">BIGBANG</span><br>
+            20TH ANNIVERSARY
+        </h1>
+        <p class="hero-desc reveal" style="transition-delay: 0.4s;">
+            K-pop의 영원한 제왕, 전례 없는 영향력과 음악적 혁신으로 가득 찬 20년을 기념합니다.<br>
+            <span class="coachella-hint">COACHELLA 2026: THE NEW CHAPTER COMING SOON</span>
+        </p>
+        <div class="scroll-down" onclick="document.querySelector('#timeline').scrollIntoView()">&#8595;</div>
+    </section>
+
+    <section id="timeline">
+        <h2 class="section-title reveal"><span class="gold-text">The Journey</span></h2>
+        <div class="timeline-container">
+            <div class="timeline-item left reveal">
+                <div class="timeline-content glass-card">
+                    <div class="timeline-year">2006</div>
+                    <h3>위대한 시작</h3>
+                    <p>빅뱅은 2006년 8월 19일 공식 데뷔했습니다. 이들은 주류 음악계에 힙합 사운드를 전파하며 K-pop의 새로운 지평을 열었습니다.</p>
+                </div>
+            </div>
+            <div class="timeline-item right reveal">
+                <div class="timeline-content glass-card">
+                    <div class="timeline-year">2007</div>
+                    <h3>거짓말 & 신드롬</h3>
+                    <p>'거짓말(Lies)'의 발매는 그룹을 최정상으로 이끌었으며, 국내 전 차트를 석권하며 '국민 아이돌'의 탄생을 알렸습니다.</p>
+                </div>
+            </div>
+            <div class="timeline-item left reveal">
+                <div class="timeline-content glass-card">
+                    <div class="timeline-year">2012</div>
+                    <h3>ALIVE & 월드 투어</h3>
+                    <p>한국어 앨범 최초로 빌보드 200 차트 진입. 전 세계 80만 명 이상의 팬들과 호흡하며 글로벌 아이콘으로 우뚝 섰습니다.</p>
+                </div>
+            </div>
+            <div class="timeline-item right reveal">
+                <div class="timeline-content glass-card">
+                    <div class="timeline-year">2015</div>
+                    <h3>MADE SERIES</h3>
+                    <p>매달 두 곡의 싱글을 발표하는 전무후무한 프로젝트. 'Loser', '뱅뱅뱅' 등의 히트곡으로 독보적인 존재감을 과시했습니다.</p>
+                </div>
+            </div>
+            <div class="timeline-item left reveal">
+                <div class="timeline-content glass-card">
+                    <div class="timeline-year">2022</div>
+                    <h3>봄여름가을겨울</h3>
+                    <p>긴 공백을 깨고 발표한 'Still Life'. 음악적 깊이와 진정성으로 다시 한번 차트 정상을 차지하며 레전드의 귀환을 알렸습니다.</p>
+                </div>
+            </div>
+            <div class="timeline-item right reveal">
+                <div class="timeline-content glass-card coachella-event">
+                    <div class="timeline-year">2026</div>
+                    <h3>COACHELLA 2026</h3>
+                    <p>데뷔 20주년, 상징적인 코첼라 무대에서 다시 한번 왕의 귀환을 꿈꾸다. 새로운 챕터를 여는 역사적인 순간을 예고합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="albums">
+        <h2 class="section-title reveal"><span class="gold-text">Iconic Eras</span></h2>
+        <div class="albums-grid">
+            <div class="album-card glass-card album-1 reveal">
+                <div class="album-art"></div>
+                <div class="album-info">
+                    <div class="album-year">2007</div>
+                    <h3 class="album-title">Always</h3>
+                    <p class="text-gray">한 세대를 정의한 일렉트로닉 힙합의 탄생, 전설적인 트랙 '거짓말' 수록.</p>
+                </div>
+            </div>
+            <div class="album-card glass-card album-2 reveal" style="transition-delay: 0.2s;">
+                <div class="album-art"></div>
+                <div class="album-info">
+                    <div class="album-year">2012</div>
+                    <h3 class="album-title">Alive</h3>
+                    <p class="text-gray">'Fantastic Baby'를 앞세워 전 세계 K-pop의 새로운 기준을 제시한 명반.</p>
+                </div>
+            </div>
+            <div class="album-card glass-card album-3 reveal" style="transition-delay: 0.4s;">
+                <div class="album-art"></div>
+                <div class="album-info">
+                    <div class="album-year">2016</div>
+                    <h3 class="album-title">MADE</h3>
+                    <p class="text-gray">글로벌 차트를 석권한 걸작, 아티스트로서의 완벽한 성숙함을 보여준 앨범.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="members">
+        <h2 class="section-title reveal"><span class="gold-text">The Icons</span></h2>
+        <div class="members-grid">
+            <div class="member-card glass-card member-gd reveal">
+                <div class="member-avatar"></div>
+                <h3 class="member-name">G-DRAGON</h3>
+                <p class="member-role">Leader / Rapper / Producer</p>
+            </div>
+            <div class="member-card glass-card member-taeyang reveal" style="transition-delay: 0.1s;">
+                <div class="member-avatar"></div>
+                <h3 class="member-name">TAEYANG</h3>
+                <p class="member-role">Main Vocalist / Dancer</p>
+            </div>
+            <div class="member-card glass-card member-daesung reveal" style="transition-delay: 0.2s;">
+                <div class="member-avatar"></div>
+                <h3 class="member-name">DAESUNG</h3>
+                <p class="member-role">Lead Vocalist</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="solo-chapters">
+        <h2 class="section-title reveal"><span class="gold-text">Solo Chapters</span></h2>
+        <div class="solo-grid">
+            <!-- G-DRAGON -->
+            <div class="solo-card glass-card reveal">
+                <div class="solo-name">G-DRAGON</div>
+                <p class="solo-desc">
+                    갤럭시코퍼레이션과 새 여정을 시작한 지드래곤은 2024년 싱글 'Power'로 화려하게 컴백했습니다. 
+                    2025년 정규 앨범 'Übermensch' 발매와 동시에 대규모 월드 투어를 진행하며 전 세계 패션과 음악계에 독보적인 영향력을 다시 한번 각인시켰습니다.
+                </p>
+                <div class="tag-container">
+                    <span class="tag">#컴백</span>
+                    <span class="tag">#월드투어</span>
+                    <span class="tag">#샤넬</span>
+                    <span class="tag">#패션아이콘</span>
+                </div>
+                <div class="solo-quote">"멈춰있던 시간이 다시 흐르기 시작했다."</div>
+            </div>
+
+            <!-- TAEYANG -->
+            <div class="solo-card glass-card reveal" style="transition-delay: 0.1s;">
+                <div class="solo-name">TAEYANG</div>
+                <p class="solo-desc">
+                    EP 'Down to Earth'를 통해 진정성 있는 음악세계를 선보인 태양은 솔로 콘서트 'The Light Year'로 팬들과 깊게 교감했습니다. 
+                    2025년 아시아 팬미팅 투어와 다양한 글로벌 무대를 통해 아티스트로서의 완벽한 퍼포먼스와 보컬을 증명해 보였습니다.
+                </p>
+                <div class="tag-container">
+                    <span class="tag">#보컬</span>
+                    <span class="tag">#퍼포먼스</span>
+                    <span class="tag">#진정성</span>
+                    <span class="tag">#더라이트이어</span>
+                </div>
+                <div class="solo-quote">"나의 태양은 언제나 팬들을 향해 떠오른다."</div>
+            </div>
+
+            <!-- DAESUNG -->
+            <div class="solo-card glass-card reveal" style="transition-delay: 0.2s;">
+                <div class="solo-name">DAESUNG</div>
+                <p class="solo-desc">
+                    D-Label 설립 후 2025년 미니 앨범 'D’s WAVE'를 발표하며 성공적인 홀로서기를 이어갔습니다. 
+                    유튜브 채널 '집대성'으로 친근한 소통을 이어가는 동시에, 아시아 투어를 통해 압도적인 라이브 실력을 갖춘 보컬리스트로서의 입지를 굳혔습니다.
+                </p>
+                <div class="tag-container">
+                    <span class="tag">#D-Label</span>
+                    <span class="tag">#집대성</span>
+                    <span class="tag">#아시아투어</span>
+                    <span class="tag">#일본활동</span>
+                </div>
+                <div class="solo-quote">"함께 걷는 이 길이 곧 우리의 노래가 된다."</div>
+            </div>
+
+            <!-- T.O.P (Individual Mention) -->
+            <div class="solo-card glass-card reveal" style="transition-delay: 0.3s;">
+                <div class="solo-name" style="opacity: 0.8;">T.O.P</div>
+                <p class="solo-desc">
+                    그룹 활동을 마무리한 탑은 '오징어 게임 2'를 통해 연기자로서 새로운 도전에 나섰습니다. 
+                    와인 브랜드 'T’SPOT' 운영과 예술 컬렉터로서 활동하는 한편, 2026년 솔로 앨범 'Another Dimension'을 준비하며 독자적인 예술 세계를 구축하고 있습니다.
+                </p>
+                <div class="tag-container">
+                    <span class="tag">#연기</span>
+                    <span class="tag">#오징어게임2</span>
+                    <span class="tag">#아트컬렉터</span>
+                    <span class="tag">#T-SPOT</span>
+                </div>
+                <div class="solo-quote">"예술은 경계 없는 우주와 같다."</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="legacy">
+        <div class="legacy-content glass-card reveal">
+            <h2 class="section-title"><span class="gold-text">The Legacy</span></h2>
+            <p style="font-family: 'Noto Serif KR', serif; font-size: 1.1rem; line-height: 1.8;">
+                빅뱅은 단순한 아이돌 그 이상이었습니다. 스스로 곡을 쓰고, 트렌드를 창조하며, 
+                한 시대를 대변하는 문화적 상징이 되었습니다. 이들의 발자취는 멈추지 않습니다.
+            </p>
+            
+            <div class="legacy-quote reveal">
+                "우리는 트렌드를 따라가지 않는다.<br>우리가 트렌드가 되고 싶을 뿐이다."
+            </div>
+            
+            <p style="color: var(--gold-primary); font-weight: 700; margin-top: 20px;">
+                20주년, 그리고 2026 Coachella에서의 새로운 시작.<br>왕의 귀환은 이제부터입니다.
+            </p>
+            <div class="coachella-legacy brand-font">BIGBANG IS VIP. FOREVER.</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo brand-font gold-text">BIGBANG 20</div>
+        <div class="social-links">
+            <span>SPOTIFY</span>
+            <span>YOUTUBE</span>
+            <span>INSTAGRAM</span>
+        </div>
+        <div class="footer-text">
+            &copy; 2026 BIGBANG 20th Anniversary Tribute. Designed for VIPs. <br>
+            2026 Coachella 컨셉은 팬페이지를 위한 창작물이며 공식 일정과 무관할 수 있습니다.
+        </div>
+    </footer>
+
+    <script>
+        // Floating Particles 생성
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 30;
+            
+            for(let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 4 + 1;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 10 + 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDelay = `-${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Intersection Observer for Smooth Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // Initialize
+        window.addEventListener('load', () => {
+            createParticles();
+            // Hero animation trigger
+            setTimeout(() => {
+                document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('active'));
+            }, 200);
+        });
+    </script>
+</body>
+</html>
